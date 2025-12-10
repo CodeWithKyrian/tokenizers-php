@@ -3,6 +3,23 @@
     "description": "Fast, pure-PHP tokenizer library compatible with Hugging Face tokenizers for encoding and decoding text",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "tokenizer",
+        "tokenization",
+        "nlp",
+        "natural-language-processing",
+        "huggingface",
+        "transformers",
+        "bpe",
+        "wordpiece",
+        "sentencepiece",
+        "bert",
+        "gpt",
+        "llm",
+        "machine-learning",
+        "text-processing",
+        "encoding"
+    ],
     "autoload": {
         "psr-4": {
             "Codewithkyrian\\Tokenizers\\": "src/"

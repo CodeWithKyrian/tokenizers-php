@@ -1,0 +1,37 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE/project files
+.idea/
+.vscode/
+*.iml
+.phpstorm.meta.php
+.cursor/
+
+# Composer
+/vendor/
+composer.phar
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Tests and tooling caches
+.phpunit.result.cache
+.phpunit.cache
+/.phpunit.cache/
+.pest/
+.php-cs-fixer.cache
+/php-cs-fixer.cache
+phpstan.neon
+
+# Build/coverage outputs
+/coverage/
+/build/
+/dist/
+/var/
+/tmp/
+/logs/
+

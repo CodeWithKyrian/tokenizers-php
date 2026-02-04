@@ -59,7 +59,7 @@ class BPEModel extends AbstractModel
             $this->merges = $merges;
         } else {
             $this->merges = array_map(
-                fn ($merge) => \is_string($merge) ? explode(' ', $merge, 2) : $merge,
+                static fn ($merge) => \is_string($merge) ? explode(' ', $merge, 2) : $merge,
                 $merges
             );
         }

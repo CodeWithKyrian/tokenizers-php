@@ -138,8 +138,8 @@ foreach ($nliSamples as $index => $sample) {
     echo "  Structure: [CLS] premise [SEP] hypothesis [SEP]\n";
 
     // Type IDs distinguish between premise (0) and hypothesis (1)
-    $segment0Count = count(array_filter($encoding->typeIds, fn ($t) => 0 === $t));
-    $segment1Count = count(array_filter($encoding->typeIds, fn ($t) => 1 === $t));
+    $segment0Count = count(array_filter($encoding->typeIds, static fn ($t) => 0 === $t));
+    $segment1Count = count(array_filter($encoding->typeIds, static fn ($t) => 1 === $t));
 
     echo "  Segment A (premise) tokens: {$segment0Count}\n";
     echo "  Segment B (hypothesis) tokens: {$segment1Count}\n";

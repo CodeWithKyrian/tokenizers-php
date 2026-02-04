@@ -45,7 +45,7 @@ class PostProcessorFactory
                 pair: $config['pair']
             ),
             'Sequence' => new PostProcessorSequence(
-                array_map(fn ($c) => self::create($c), $config['processors'] ?? [])
+                array_map(static fn ($c) => self::create($c), $config['processors'] ?? [])
             ),
             default => throw new \Exception("Unknown post-processor type: {$type}"),
         };

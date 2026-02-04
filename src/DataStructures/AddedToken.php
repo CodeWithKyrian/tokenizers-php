@@ -10,7 +10,7 @@ namespace Codewithkyrian\Tokenizers\DataStructures;
  *   - Whether they should only match single words
  *   - Whether to include any whitespace on its left or right.
  */
-class AddedToken
+readonly class AddedToken
 {
     public function __construct(
         /**

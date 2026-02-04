@@ -45,7 +45,7 @@ abstract class AbstractModel implements ModelInterface
             $tokens[] = $this->vocab[$id] ?? $this->unkToken ?? null;
         }
 
-        return array_filter($tokens, fn ($t) => null !== $t);
+        return array_filter($tokens, static fn ($t) => null !== $t);
     }
 
     /**
@@ -65,7 +65,7 @@ abstract class AbstractModel implements ModelInterface
         }
 
         // Removing nulls in case unkTokenId is null (though should exist)
-        return array_filter($ids, fn ($id) => null !== $id);
+        return array_filter($ids, static fn ($id) => null !== $id);
     }
 
     /**

@@ -35,7 +35,7 @@ class NormalizerFactory
             ),
             'Lowercase' => new LowercaseNormalizer(),
             'Sequence' => new NormalizerSequence(
-                array_map(fn ($c) => self::create($c), $config['normalizers'] ?? [])
+                array_map(static fn ($c) => self::create($c), $config['normalizers'] ?? [])
             ),
             'Strip' => new StripNormalizer(
                 stripLeft: $config['strip_left'] ?? true,

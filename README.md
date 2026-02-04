@@ -18,7 +18,7 @@
 - **Zero Hard Dependencies** — Core tokenization has no required dependencies. Optional HTTP client needed only for Hub downloads.
 - **Hub Compatible** — Load tokenizers directly from Hugging Face Hub or from local files.
 - **Fully Tested** — Validated against BERT, GPT-2, Llama, Gemma, Qwen, RoBERTa, ALBERT, and more.
-- **Modern PHP** — Built for PHP 8.1+ with strict types, readonly properties, and clean interfaces.
+- **Modern PHP** — Built for PHP 8.2+ with strict types, readonly classes, and clean interfaces.
 
 ## Installation
 

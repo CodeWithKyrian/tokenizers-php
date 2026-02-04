@@ -302,7 +302,7 @@ class ByteLevelDecoder extends BaseDecoder
     {
         $text = implode('', $tokens);
         $textArray = preg_split('//u', $text, -1, \PREG_SPLIT_NO_EMPTY);
-        $byteArray = array_map(fn ($x) => self::UNICODE_TO_BYTES[$x] ?? \ord($x), $textArray);
+        $byteArray = array_map(static fn ($x) => self::UNICODE_TO_BYTES[$x] ?? \ord($x), $textArray);
         $binaryString = pack('C*', ...$byteArray);
 
         return mb_convert_encoding($binaryString, 'UTF-8');

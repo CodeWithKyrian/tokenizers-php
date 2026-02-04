@@ -15,7 +15,7 @@ class DecoderSequence extends BaseDecoder
     {
         return array_reduce(
             $this->decoders,
-            fn (array $tokens, BaseDecoder $decoder) => $decoder->processTokens($tokens),
+            static fn (array $tokens, BaseDecoder $decoder) => $decoder->processTokens($tokens),
             $tokens
         );
     }

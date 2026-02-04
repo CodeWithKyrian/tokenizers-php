@@ -17,7 +17,7 @@ class PreTokenizerSequence implements PreTokenizerInterface
     {
         return array_reduce(
             $this->preTokenizers,
-            fn ($text, PreTokenizerInterface $preTokenizer) => $preTokenizer->preTokenize($text, $options),
+            static fn ($text, PreTokenizerInterface $preTokenizer) => $preTokenizer->preTokenize($text, $options),
             \is_array($text) ? $text : [$text]
         );
     }

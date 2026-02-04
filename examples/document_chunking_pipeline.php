@@ -232,7 +232,7 @@ foreach ($result['chunks'] as $index => $chunk) {
     $originalWords = array_slice(explode(' ', $chunk), 0, 5);
     $decodedWords = explode(' ', $decoded);
 
-    $matchCount = count(array_filter($originalWords, fn ($w) => in_array(strtolower($w), array_map('strtolower', $decodedWords))));
+    $matchCount = count(array_filter($originalWords, static fn ($w) => in_array(strtolower($w), array_map('strtolower', $decodedWords))));
 
     if ($matchCount < 3) {
         echo '⚠️ Chunk '.($index + 1)." may have encoding issues\n";

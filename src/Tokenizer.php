@@ -25,12 +25,12 @@ use Codewithkyrian\Tokenizers\PreTokenizers\IdentityPreTokenizer;
 use Codewithkyrian\Tokenizers\Utils\DecoderUtils;
 use Codewithkyrian\Tokenizers\Utils\NormalizerUtils;
 
-class Tokenizer
+readonly class Tokenizer
 {
     /**
      * The model's maximum sequence length (convenience accessor for config).
      */
-    public readonly ?int $modelMaxLength;
+    public ?int $modelMaxLength;
     protected DictionarySplitter $addedTokensSplitter;
 
     /**
@@ -44,11 +44,11 @@ class Tokenizer
      * @param array<string, mixed>      $config        Additional configuration options
      */
     public function __construct(
-        protected ModelInterface $model,
-        protected NormalizerInterface $normalizer,
-        protected PreTokenizerInterface $preTokenizer,
-        protected PostProcessorInterface $postProcessor,
-        protected DecoderInterface $decoder,
+        public ModelInterface $model,
+        public NormalizerInterface $normalizer,
+        public PreTokenizerInterface $preTokenizer,
+        public PostProcessorInterface $postProcessor,
+        public DecoderInterface $decoder,
         protected array $specialTokens = [],
         protected array $addedTokens = [],
         protected array $config = []

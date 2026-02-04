@@ -303,9 +303,9 @@ class ByteLevelPreTokenizer implements PreTokenizerInterface
         }
 
         // Maps all our bytes to unicode strings, avoiding control tokens of the BPE (spaces in our case)
-        return array_map(function ($token) {
+        return array_map(static function ($token) {
             $utf8Bytes = mb_convert_encoding($token, 'UTF-8');
-            $bytes = array_map(fn ($byte) => self::BYTES_TO_UNICODE[$byte], unpack('C*', $utf8Bytes));
+            $bytes = array_map(static fn ($byte) => self::BYTES_TO_UNICODE[$byte], unpack('C*', $utf8Bytes));
 
             return implode('', $bytes);
         }, $tokens);

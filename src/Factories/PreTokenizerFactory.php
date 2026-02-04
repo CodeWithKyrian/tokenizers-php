@@ -55,7 +55,7 @@ class PreTokenizerFactory
                 invert: $config['invert'] ?? true
             ),
             'Sequence' => new PreTokenizerSequence(
-                array_map(fn ($c) => self::create($c), $config['pretokenizers'] ?? [])
+                array_map(static fn ($c) => self::create($c), $config['pretokenizers'] ?? [])
             ),
             default => throw new \Exception("Unknown pre-tokenizer type: {$type}"),
         };

@@ -117,6 +117,6 @@ class TokenLattice
     {
         $nodes = $this->viterbi();
 
-        return array_map(fn ($x) => $x->tokenId, $nodes);
+        return array_map(static fn ($x) => $x->tokenId, $nodes);
     }
 }

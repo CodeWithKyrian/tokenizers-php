@@ -17,7 +17,7 @@ class NormalizerSequence implements NormalizerInterface
     {
         return array_reduce(
             $this->normalizers,
-            fn (string $text, NormalizerInterface $normalizer) => $normalizer->normalize($text),
+            static fn (string $text, NormalizerInterface $normalizer) => $normalizer->normalize($text),
             $text
         );
     }

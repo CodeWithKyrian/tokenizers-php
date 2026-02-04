@@ -9,7 +9,7 @@ declare(strict_types=1);
  */
 function modelTokenizationDataset(string $datasetClass, bool $withTextPair = false): Closure
 {
-    return function () use ($datasetClass, $withTextPair) {
+    return static function () use ($datasetClass, $withTextPair) {
         if (!class_exists($datasetClass) || !method_exists($datasetClass, 'data')) {
             return;
         }

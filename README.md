@@ -15,8 +15,8 @@
 ## Highlights
 
 - **Pure PHP** — No FFI, no external binaries, no compiled extensions. Works everywhere PHP runs.
-- **Zero Hard Dependencies** — Core tokenization has no required dependencies. Optional HTTP client needed only for Hub downloads.
-- **Hub Compatible** — Load tokenizers directly from Hugging Face Hub or from local files.
+- **Hub Integration** — Load tokenizers from Hugging Face Hub with smart caching and manifest-based file checks.
+- **Flexible Loading** — Load from local files, config arrays, or build custom tokenizers with the builder API.
 - **Fully Tested** — Validated against BERT, GPT-2, Llama, Gemma, Qwen, RoBERTa, ALBERT, and more.
 - **Modern PHP** — Built for PHP 8.2+ with strict types, readonly classes, and clean interfaces.
 
@@ -28,15 +28,13 @@ Install via Composer:
 composer require codewithkyrian/tokenizers
 ```
 
-### HTTP Client (Optional)
+### HTTP Client (for Hub loading)
 
-If you plan to load tokenizers from the Hugging Face Hub, you'll need an HTTP client implementing PSR-18. We recommend Guzzle:
+Loading tokenizers from the Hugging Face Hub requires an HTTP client. We recommend Guzzle:
 
 ```bash
 composer require guzzlehttp/guzzle
 ```
-
-> **Note:** The library uses [PHP-HTTP Discovery](https://github.com/php-http/discovery) to automatically find and use any PSR-18 compatible HTTP client installed in your project. If you're only loading tokenizers from local files, no HTTP client is needed.
 
 ## Quick Start
 
@@ -96,10 +94,13 @@ $tokenizer = Tokenizer::fromHub(
 
 When `cacheDir` is not specified, the library automatically resolves the cache location:
 
-1. **Environment Variable** — `TOKENIZERS_CACHE` if set
-2. **macOS** — `~/Library/Caches/huggingface/tokenizers`
-3. **Linux** — `$XDG_CACHE_HOME/huggingface/tokenizers` or `~/.cache/huggingface/tokenizers`
-4. **Windows** — `%LOCALAPPDATA%\huggingface\tokenizers`
+1. **HF_HUB_CACHE** — if set, used directly
+2. **HF_HOME** — if set, `$HF_HOME/hub`
+3. **macOS** — `~/Library/Caches/huggingface/hub`
+4. **Linux** — `$XDG_CACHE_HOME/huggingface/hub` or `~/.cache/huggingface/hub`
+5. **Windows** — `%LOCALAPPDATA%\huggingface\hub`
+
+Pass `cacheDir` to use a custom directory.
 
 ### From Local Files
 

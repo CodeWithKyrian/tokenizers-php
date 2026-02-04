@@ -42,7 +42,8 @@ class HubLoader implements ConfigLoaderInterface
 
         $repo = $hf->hub()
             ->repo($modelId)
-            ->revision($this->revision);
+            ->revision($this->revision)
+        ;
 
         $repo->snapshot(
             allowPatterns: self::TOKENIZER_FILES,

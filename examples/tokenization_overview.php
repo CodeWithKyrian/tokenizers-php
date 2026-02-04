@@ -16,17 +16,16 @@ use Codewithkyrian\Tokenizers\Tokenizer;
  * Run with:
  *   php examples/tokenization_overview.php
  */
-
 $models = [
     'BERT (uncased)' => 'google-bert/bert-base-uncased',
-    'GPT-2'          => 'openai-community/gpt2',
-    'Qwen3 Embedding'      => 'Qwen/Qwen3-Embedding-0.6B',
+    'GPT-2' => 'openai-community/gpt2',
+    'Qwen3 Embedding' => 'Qwen/Qwen3-Embedding-0.6B',
 ];
 
 $samples = [
     'Short sentence' => 'Hello, how are you doing today?',
-    'Code snippet'   => 'function sum(int $a, int $b): int { return $a + $b; }',
-    'Mixed content'  => 'Paris is the capital of France. 42 🧠',
+    'Code snippet' => 'function sum(int $a, int $b): int { return $a + $b; }',
+    'Mixed content' => 'Paris is the capital of France. 42 🧠',
 ];
 
 echo "=== Tokenizers PHP - Tokenization Overview ===\n\n";
@@ -43,7 +42,7 @@ foreach ($models as $label => $modelId) {
         $ids = $encoding->ids;
         $tokens = $encoding->tokens;
 
-        $count = \count($ids);
+        $count = count($ids);
         $idsPreview = implode(', ', array_slice($ids, 0, 10));
         $tokensPreview = implode(' ', array_slice($tokens, 0, 10));
 
@@ -56,4 +55,3 @@ foreach ($models as $label => $modelId) {
 
     echo str_repeat('-', 60)."\n\n";
 }
-

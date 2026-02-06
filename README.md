@@ -157,9 +157,6 @@ $maxLength = $tokenizer->getConfig('model_max_length');           // 512
 $cleanup = $tokenizer->getConfig('clean_up_tokenization_spaces'); // true
 $custom = $tokenizer->getConfig('unknown_key', 'default');        // 'default'
 
-// Convenience property for model_max_length
-echo $tokenizer->modelMaxLength; // 512
-
 // Get all configuration (pass null or no arguments)
 $allConfig = $tokenizer->getConfig();
 ```
@@ -169,8 +166,6 @@ Common configuration keys:
 - `remove_space` — Whether to remove leading/trailing spaces
 - `do_lowercase_and_remove_accent` — Whether to lowercase and strip accents
 - `clean_up_tokenization_spaces` — Whether to clean up spaces during decoding
-
-> **Note:** `model_max_length` is the tokenizer's configured max length, not necessarily the model's actual context window. For most models, these are the same. However, some tokenizers (like Llama 3) set this to an extremely large value. When building applications, you may want to use known context window limits for specific models rather than relying solely on this value.
 
 ## Encoding Text
 

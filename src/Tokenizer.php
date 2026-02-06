@@ -23,10 +23,6 @@ use Codewithkyrian\Tokenizers\Utils\NormalizerUtils;
 
 readonly class Tokenizer
 {
-    /**
-     * The model's maximum sequence length (convenience accessor for config).
-     */
-    public ?int $modelMaxLength;
     protected DictionarySplitter $addedTokensSplitter;
 
     /**
@@ -45,14 +41,11 @@ readonly class Tokenizer
         public PreTokenizerInterface $preTokenizer,
         public PostProcessorInterface $postProcessor,
         public DecoderInterface $decoder,
-        protected array $specialTokens = [],
-        protected array $addedTokens = [],
+        public array $specialTokens = [],
+        public array $addedTokens = [],
         protected array $config = []
     ) {
         $this->addedTokensSplitter = new DictionarySplitter(array_keys($this->addedTokens));
-
-        $maxLength = $this->config['model_max_length'] ?? null;
-        $this->modelMaxLength = null !== $maxLength ? (int) $maxLength : null;
     }
 
     /**

@@ -26,4 +26,9 @@ class DefaultPostProcessor implements PostProcessorInterface
 
         return [$tokens, $typeIds];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        return null === $key ? null : $default;
+    }
 }

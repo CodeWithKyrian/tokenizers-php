@@ -14,4 +14,26 @@ class RobertaPostProcessor extends BertPostProcessor
     ) {
         parent::__construct($sep, $cls);
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'RobertaProcessing',
+                'sep' => [$this->sep, 0],
+                'cls' => [$this->cls, 0],
+                'trim_offsets' => $this->trimOffsets,
+                'add_prefix_space' => $this->addPrefixSpace,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'RobertaProcessing',
+            'sep' => [$this->sep, 0],
+            'cls' => [$this->cls, 0],
+            'trim_offsets' => $this->trimOffsets,
+            'add_prefix_space' => $this->addPrefixSpace,
+        ];
+    }
 }

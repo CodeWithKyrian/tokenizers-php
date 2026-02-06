@@ -20,4 +20,9 @@ class IdentityPreTokenizer implements PreTokenizerInterface
 
         return [$text];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        return null === $key ? [] : $default;
+    }
 }

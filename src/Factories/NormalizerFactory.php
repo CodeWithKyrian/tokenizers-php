@@ -11,6 +11,7 @@ use Codewithkyrian\Tokenizers\Normalizers\NFCNormalizer;
 use Codewithkyrian\Tokenizers\Normalizers\NFKCNormalizer;
 use Codewithkyrian\Tokenizers\Normalizers\NFKDNormalizer;
 use Codewithkyrian\Tokenizers\Normalizers\NormalizerSequence;
+use Codewithkyrian\Tokenizers\Normalizers\PassThroughNormalizer;
 use Codewithkyrian\Tokenizers\Normalizers\PrecompiledNormalizer;
 use Codewithkyrian\Tokenizers\Normalizers\PrependNormalizer;
 use Codewithkyrian\Tokenizers\Normalizers\ReplaceNormalizer;
@@ -24,6 +25,10 @@ class NormalizerFactory
      */
     public static function create(array $config): NormalizerInterface
     {
+        if (empty($config)) {
+            return new PassThroughNormalizer();
+        }
+
         $type = $config['type'] ?? null;
 
         return match ($type) {

@@ -14,4 +14,20 @@ class PrependNormalizer implements NormalizerInterface
     {
         return $this->prepend.$text;
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Prepend',
+                'prepend' => $this->prepend,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Prepend',
+            'prepend' => $this->prepend,
+        ];
+    }
 }

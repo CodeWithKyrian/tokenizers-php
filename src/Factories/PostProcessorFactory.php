@@ -7,6 +7,7 @@ namespace Codewithkyrian\Tokenizers\Factories;
 use Codewithkyrian\Tokenizers\Contracts\PostProcessorInterface;
 use Codewithkyrian\Tokenizers\PostProcessors\BertPostProcessor;
 use Codewithkyrian\Tokenizers\PostProcessors\ByteLevelPostProcessor;
+use Codewithkyrian\Tokenizers\PostProcessors\DefaultPostProcessor;
 use Codewithkyrian\Tokenizers\PostProcessors\PostProcessorSequence;
 use Codewithkyrian\Tokenizers\PostProcessors\RobertaPostProcessor;
 use Codewithkyrian\Tokenizers\PostProcessors\TemplatePostProcessor;
@@ -16,10 +17,10 @@ class PostProcessorFactory
     /**
      * @param array<string, mixed> $config the post-processor configuration
      */
-    public static function create(array $config): ?PostProcessorInterface
+    public static function create(array $config): PostProcessorInterface
     {
         if (empty($config)) {
-            return null;
+            return new DefaultPostProcessor();
         }
 
         $type = $config['type'] ?? null;

@@ -90,4 +90,26 @@ class WordPieceModel extends AbstractModel
 
         return $outputTokens;
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'WordPiece',
+                'vocab' => $this->tokenToIds,
+                'unk_token' => $this->unkToken,
+                'max_input_chars_per_word' => $this->maxInputCharsPerWord,
+                'continuing_subword_prefix' => $this->continuingSubwordPrefix,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'WordPiece',
+            'vocab' => $this->tokenToIds,
+            'unk_token' => $this->unkToken,
+            'max_input_chars_per_word' => $this->maxInputCharsPerWord,
+            'continuing_subword_prefix' => $this->continuingSubwordPrefix,
+        ];
+    }
 }

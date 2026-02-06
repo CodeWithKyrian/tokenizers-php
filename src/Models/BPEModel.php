@@ -78,11 +78,6 @@ class BPEModel extends AbstractModel
         $this->cache = new LRUCache($this->cacheCapacity);
     }
 
-    public function getEndOfWordSuffix(): ?string
-    {
-        return $this->endOfWordSuffix;
-    }
-
     /**
      * @param string[] $tokens
      *
@@ -136,6 +131,35 @@ class BPEModel extends AbstractModel
     public function clearCache(): void
     {
         $this->cache->clear();
+    }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'BPE',
+                'vocab' => $this->tokenToIds,
+                'merges' => $this->merges,
+                'unk_token' => $this->unkToken,
+                'end_of_word_suffix' => $this->endOfWordSuffix,
+                'continuing_subword_suffix' => $this->continuingSubwordSuffix,
+                'byte_fallback' => $this->byteFallback,
+                'ignore_merges' => $this->ignoreMerges,
+                'cache_capacity' => $this->cacheCapacity,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'BPE',
+            'vocab' => $this->tokenToIds,
+            'merges' => $this->merges,
+            'unk_token' => $this->unkToken,
+            'end_of_word_suffix' => $this->endOfWordSuffix,
+            'continuing_subword_suffix' => $this->continuingSubwordSuffix,
+            'byte_fallback' => $this->byteFallback,
+            'ignore_merges' => $this->ignoreMerges,
+        ];
     }
 
     /**

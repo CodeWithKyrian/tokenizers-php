@@ -12,4 +12,13 @@ class NFKDNormalizer implements NormalizerInterface
     {
         return normalizer_normalize($text, \Normalizer::NFKD);
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return 'type' === $key ? 'NFKD' : $default;
+        }
+
+        return ['type' => 'NFKD'];
+    }
 }

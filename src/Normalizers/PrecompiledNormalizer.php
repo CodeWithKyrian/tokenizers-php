@@ -9,14 +9,12 @@ use Codewithkyrian\Tokenizers\DataStructures\DoubleArray;
 
 class PrecompiledNormalizer implements NormalizerInterface
 {
-    private string $precompiled_charsmap;
     private string $normalized;
     private DoubleArray $trie;
 
-    public function __construct(string $precompiledCharsmap)
+    public function __construct(private string $precompiledCharsmap)
     {
-        $this->precompiled_charsmap = $precompiledCharsmap;
-        $this->parse(base64_decode($this->precompiled_charsmap));
+        $this->parse(base64_decode($precompiledCharsmap));
     }
 
     public function normalize(string $text): string
@@ -67,6 +65,22 @@ class PrecompiledNormalizer implements NormalizerInterface
         }
 
         return $text;
+    }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Precompiled',
+                'precompiled_charsmap' => $this->precompiledCharsmap,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Precompiled',
+            'precompiled_charsmap' => $this->precompiledCharsmap,
+        ];
     }
 
     private function parse(string $precompiled_charsmap): void

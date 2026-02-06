@@ -9,6 +9,7 @@ use Codewithkyrian\Tokenizers\PreTokenizers\BertPreTokenizer;
 use Codewithkyrian\Tokenizers\PreTokenizers\ByteLevelPreTokenizer;
 use Codewithkyrian\Tokenizers\PreTokenizers\DigitsPreTokenizer;
 use Codewithkyrian\Tokenizers\PreTokenizers\FixedLengthPreTokenizer;
+use Codewithkyrian\Tokenizers\PreTokenizers\IdentityPreTokenizer;
 use Codewithkyrian\Tokenizers\PreTokenizers\MetaspacePreTokenizer;
 use Codewithkyrian\Tokenizers\PreTokenizers\PreTokenizerSequence;
 use Codewithkyrian\Tokenizers\PreTokenizers\PunctuationPreTokenizer;
@@ -24,6 +25,10 @@ class PreTokenizerFactory
      */
     public static function create(array $config): PreTokenizerInterface
     {
+        if (empty($config)) {
+            return new IdentityPreTokenizer();
+        }
+
         $type = $config['type'] ?? null;
 
         return match ($type) {

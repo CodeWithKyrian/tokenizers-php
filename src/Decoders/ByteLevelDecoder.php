@@ -275,11 +275,16 @@ class ByteLevelDecoder extends BaseDecoder
 
     /**
      * Convert an array of tokens to a string by decoding each byte.
-     *
-     * @param string[] $tokens array of tokens to be decoded
-     *
-     * @return string the decoded string
      */
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return 'type' === $key ? 'ByteLevel' : $default;
+        }
+
+        return ['type' => 'ByteLevel'];
+    }
+
     public function decode(array $tokens): string
     {
         $decoded = parent::decode($tokens);

@@ -81,17 +81,6 @@ abstract class AbstractModel implements ModelInterface
     }
 
     /**
-     * Get the end of word suffix, if any.
-     * Default implementation returns null. Models like BPE override this.
-     *
-     * @return null|string the end of word suffix
-     */
-    public function getEndOfWordSuffix(): ?string
-    {
-        return null;
-    }
-
-    /**
      * @param string[] $tokens
      *
      * @return string[]

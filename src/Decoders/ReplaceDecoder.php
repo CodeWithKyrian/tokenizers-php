@@ -12,6 +12,24 @@ class ReplaceDecoder extends BaseDecoder
         protected string $replacement = ''
     ) {}
 
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Replace',
+                'pattern' => $this->regex ? ['Regex' => $this->regex] : ['String' => $this->subString],
+                'content' => $this->replacement,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Replace',
+            'pattern' => $this->regex ? ['Regex' => $this->regex] : ['String' => $this->subString],
+            'content' => $this->replacement,
+        ];
+    }
+
     protected function processTokens(array $tokens): array
     {
         return array_map(function ($token) {

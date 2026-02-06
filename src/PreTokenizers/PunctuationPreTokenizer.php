@@ -31,4 +31,20 @@ class PunctuationPreTokenizer implements PreTokenizerInterface
 
         return $matches[0] ?? [];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Punctuation',
+                'behavior' => $this->behavior,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Punctuation',
+            'behavior' => $this->behavior,
+        ];
+    }
 }

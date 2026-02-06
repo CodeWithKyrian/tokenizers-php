@@ -55,4 +55,20 @@ class PostProcessorSequence implements PostProcessorInterface
 
         return [$tokens, $tokenTypeIds ?? array_fill(0, \count($tokens), 0)];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            if ('processors' === $key) {
+                return array_map(static fn (PostProcessorInterface $p) => $p->getConfig(), $this->processors);
+            }
+
+            return 'type' === $key ? 'Sequence' : $default;
+        }
+
+        return [
+            'type' => 'Sequence',
+            'processors' => array_map(static fn (PostProcessorInterface $p) => $p->getConfig(), $this->processors),
+        ];
+    }
 }

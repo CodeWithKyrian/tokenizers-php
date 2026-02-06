@@ -30,4 +30,22 @@ class ReplacePreTokenizer implements PreTokenizerInterface
 
         return [str_replace($this->pattern, $this->content, $text)];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Replace',
+                'pattern' => ['String' => $this->pattern],
+                'content' => $this->content,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Replace',
+            'pattern' => ['String' => $this->pattern],
+            'content' => $this->content,
+        ];
+    }
 }

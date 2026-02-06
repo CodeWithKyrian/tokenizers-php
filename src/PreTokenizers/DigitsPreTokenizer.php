@@ -32,4 +32,20 @@ class DigitsPreTokenizer implements PreTokenizerInterface
 
         return $matches[0] ?? [];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Digits',
+                'individual_digits' => $this->individualDigits,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Digits',
+            'individual_digits' => $this->individualDigits,
+        ];
+    }
 }

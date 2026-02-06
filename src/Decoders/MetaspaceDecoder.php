@@ -11,6 +11,24 @@ class MetaspaceDecoder extends BaseDecoder
         protected bool $addPrefixSpace = true
     ) {}
 
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Metaspace',
+                'replacement' => $this->replacement,
+                'add_prefix_space' => $this->addPrefixSpace,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Metaspace',
+            'replacement' => $this->replacement,
+            'add_prefix_space' => $this->addPrefixSpace,
+        ];
+    }
+
     protected function processTokens(array $tokens): array
     {
         $result = [];

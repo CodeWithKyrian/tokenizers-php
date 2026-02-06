@@ -310,4 +310,24 @@ class ByteLevelPreTokenizer implements PreTokenizerInterface
             return implode('', $bytes);
         }, $tokens);
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'ByteLevel',
+                'add_prefix_space' => $this->addPrefixSpace,
+                'trim_offsets' => $this->trimOffsets,
+                'use_regex' => $this->useRegex,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'ByteLevel',
+            'add_prefix_space' => $this->addPrefixSpace,
+            'trim_offsets' => $this->trimOffsets,
+            'use_regex' => $this->useRegex,
+        ];
+    }
 }

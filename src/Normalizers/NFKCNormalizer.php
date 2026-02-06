@@ -12,4 +12,13 @@ class NFKCNormalizer implements NormalizerInterface
     {
         return normalizer_normalize($text, \Normalizer::NFKC);
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return 'type' === $key ? 'NFKC' : $default;
+        }
+
+        return ['type' => 'NFKC'];
+    }
 }

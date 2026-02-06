@@ -11,7 +11,6 @@ use Codewithkyrian\Tokenizers\Contracts\PostProcessorInterface;
 use Codewithkyrian\Tokenizers\Contracts\PreTokenizerInterface;
 use Codewithkyrian\Tokenizers\DataStructures\AddedToken;
 use Codewithkyrian\Tokenizers\DataStructures\DictionarySplitter;
-use Codewithkyrian\Tokenizers\Decoders\FuseDecoder;
 use Codewithkyrian\Tokenizers\Factories\DecoderFactory;
 use Codewithkyrian\Tokenizers\Factories\ModelFactory;
 use Codewithkyrian\Tokenizers\Factories\NormalizerFactory;
@@ -19,9 +18,6 @@ use Codewithkyrian\Tokenizers\Factories\PostProcessorFactory;
 use Codewithkyrian\Tokenizers\Factories\PreTokenizerFactory;
 use Codewithkyrian\Tokenizers\Loaders\FileLoader;
 use Codewithkyrian\Tokenizers\Loaders\HubLoader;
-use Codewithkyrian\Tokenizers\Normalizers\PassThroughNormalizer;
-use Codewithkyrian\Tokenizers\PostProcessors\DefaultPostProcessor;
-use Codewithkyrian\Tokenizers\PreTokenizers\IdentityPreTokenizer;
 use Codewithkyrian\Tokenizers\Utils\DecoderUtils;
 use Codewithkyrian\Tokenizers\Utils\NormalizerUtils;
 
@@ -57,23 +53,6 @@ readonly class Tokenizer
 
         $maxLength = $this->config['model_max_length'] ?? null;
         $this->modelMaxLength = null !== $maxLength ? (int) $maxLength : null;
-    }
-
-    /**
-     * Get configuration value(s).
-     *
-     * @param null|string $key     The configuration key (e.g., 'model_max_length', 'remove_space'). If null, returns all config.
-     * @param mixed       $default The default value if the key doesn't exist (ignored when $key is null)
-     *
-     * @return mixed the configuration value, or full config array if $key is null
-     */
-    public function getConfig(?string $key = null, mixed $default = null): mixed
-    {
-        if (null === $key) {
-            return $this->config;
-        }
-
-        return $this->config[$key] ?? $default;
     }
 
     /**
@@ -159,18 +138,14 @@ readonly class Tokenizer
             }
         }
 
-        $normalizer = isset($config['normalizer'])
-            ? NormalizerFactory::create($config['normalizer'])
-            : new PassThroughNormalizer();
-        $preTokenizer = isset($config['pre_tokenizer'])
-            ? PreTokenizerFactory::create($config['pre_tokenizer'])
-            : new IdentityPreTokenizer();
-        $postProcessor = isset($config['post_processor'])
-            ? PostProcessorFactory::create($config['post_processor'])
-            : new DefaultPostProcessor();
-        $decoder = isset($config['decoder'])
-            ? DecoderFactory::create($config['decoder'], $addedTokens, $model->getEndOfWordSuffix())
-            : new FuseDecoder(' ');
+        $normalizer = NormalizerFactory::create($config['normalizer'] ?? []);
+        $preTokenizer = PreTokenizerFactory::create($config['pre_tokenizer'] ?? []);
+        $postProcessor = PostProcessorFactory::create($config['post_processor'] ?? []);
+        $decoder = DecoderFactory::create(
+            $config['decoder'] ?? [],
+            $addedTokens,
+            $config['model']['end_of_word_suffix'] ?? null
+        );
 
         $additionalSpecialTokens = $config['additional_special_tokens'] ?? [];
         $specialTokens = array_unique([...$specialTokens, ...$additionalSpecialTokens]);
@@ -252,6 +227,59 @@ readonly class Tokenizer
         }
 
         return $decoded;
+    }
+
+    /**
+     * Get configuration value(s).
+     *
+     * @param null|string $key     The configuration key (e.g., 'model_max_length', 'remove_space'). If null, returns all config.
+     * @param mixed       $default The default value if the key doesn't exist (ignored when $key is null)
+     *
+     * @return mixed the configuration value, or full config array if $key is null
+     */
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null === $key) {
+            $fullConfig = $this->config;
+            $fullConfig['model'] = $this->model->getConfig();
+            $fullConfig['normalizer'] = $this->normalizer->getConfig();
+            $fullConfig['pre_tokenizer'] = $this->preTokenizer->getConfig();
+            $fullConfig['post_processor'] = $this->postProcessor->getConfig();
+            $fullConfig['decoder'] = $this->decoder->getConfig();
+
+            $addedTokens = [];
+            foreach ($this->addedTokens as $token) {
+                $addedTokens[] = $token->jsonSerialize();
+            }
+            $fullConfig['added_tokens'] = $addedTokens;
+
+            return $fullConfig;
+        }
+
+        if (str_contains($key, '.')) {
+            [$component, $subKey] = explode('.', $key, 2);
+
+            return match ($component) {
+                'model' => $this->model->getConfig($subKey, $default),
+                'normalizer' => $this->normalizer->getConfig($subKey, $default),
+                'pre_tokenizer' => $this->preTokenizer->getConfig($subKey, $default),
+                'post_processor' => $this->postProcessor->getConfig($subKey, $default),
+                'decoder' => $this->decoder->getConfig($subKey, $default),
+                default => $default,
+            };
+        }
+
+        if (\in_array($key, ['model', 'normalizer', 'pre_tokenizer', 'post_processor', 'decoder'])) {
+            return match ($key) {
+                'model' => $this->model->getConfig(),
+                'normalizer' => $this->normalizer->getConfig(),
+                'pre_tokenizer' => $this->preTokenizer->getConfig(),
+                'post_processor' => $this->postProcessor->getConfig(),
+                'decoder' => $this->decoder->getConfig(),
+            };
+        }
+
+        return $this->config[$key] ?? $default;
     }
 
     /**

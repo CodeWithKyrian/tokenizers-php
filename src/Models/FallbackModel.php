@@ -91,8 +91,20 @@ class FallbackModel implements ModelInterface
         $this->vocabReversed[$token] = $id;
     }
 
-    public function getEndOfWordSuffix(): ?string
+    public function getConfig(?string $key = null, mixed $default = null): mixed
     {
-        return null;
+        if (null !== $key) {
+            return match ($key) {
+                'vocab' => $this->vocab,
+                'unk_token' => $this->unkToken,
+                default => $default,
+            };
+        }
+
+        // 2. Full Config Reconstruction
+        return [
+            'vocab' => $this->vocab,
+            'unk_token' => $this->unkToken,
+        ];
     }
 }

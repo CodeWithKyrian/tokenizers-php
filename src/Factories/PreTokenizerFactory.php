@@ -8,6 +8,7 @@ use Codewithkyrian\Tokenizers\Contracts\PreTokenizerInterface;
 use Codewithkyrian\Tokenizers\PreTokenizers\BertPreTokenizer;
 use Codewithkyrian\Tokenizers\PreTokenizers\ByteLevelPreTokenizer;
 use Codewithkyrian\Tokenizers\PreTokenizers\DigitsPreTokenizer;
+use Codewithkyrian\Tokenizers\PreTokenizers\FixedLengthPreTokenizer;
 use Codewithkyrian\Tokenizers\PreTokenizers\MetaspacePreTokenizer;
 use Codewithkyrian\Tokenizers\PreTokenizers\PreTokenizerSequence;
 use Codewithkyrian\Tokenizers\PreTokenizers\PunctuationPreTokenizer;
@@ -36,6 +37,9 @@ class PreTokenizerFactory
             ),
             'Digits' => new DigitsPreTokenizer(
                 individualDigits: $config['individual_digits'] ?? false
+            ),
+            'FixedLength' => new FixedLengthPreTokenizer(
+                length: $config['length']
             ),
             'Metaspace' => new MetaspacePreTokenizer(
                 replacement: $config['replacement'] ?? ' ',

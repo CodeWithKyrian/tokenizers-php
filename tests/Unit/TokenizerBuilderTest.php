@@ -157,7 +157,7 @@ it('passes config values to the tokenizer correctly', function () {
         ->build()
     ;
 
-    expect($tokenizer->modelMaxLength)->toBe(512)
+    expect($tokenizer->getConfig('model_max_length'))->toBe(512)
         ->and($tokenizer->getConfig('remove_space'))->toBeTrue()
         ->and($tokenizer->getConfig('clean_up_tokenization_spaces'))->toBeFalse()
         ->and($tokenizer->getConfig('custom_option'))->toBe('custom_value')
@@ -194,23 +194,4 @@ it('uses default components when not specified', function () {
     // Should not throw, defaults are used
     $encoding = $tokenizer->encode('HELLO WORLD');
     expect($encoding->ids)->toBeArray();
-});
-
-it('sets modelMaxLength from config', function () {
-    $tokenizer = (new TokenizerBuilder())
-        ->withModel(createMockModel())
-        ->withConfig('model_max_length', 2048)
-        ->build()
-    ;
-
-    expect($tokenizer->modelMaxLength)->toBe(2048);
-});
-
-it('has null modelMaxLength when not configured', function () {
-    $tokenizer = (new TokenizerBuilder())
-        ->withModel(createMockModel())
-        ->build()
-    ;
-
-    expect($tokenizer->modelMaxLength)->toBeNull();
 });

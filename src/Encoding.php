@@ -7,7 +7,7 @@ namespace Codewithkyrian\Tokenizers;
 /**
  * Represents the output of tokenization.
  */
-readonly class Encoding
+readonly class Encoding implements \Countable
 {
     /**
      * @param int[]    $ids     The list of token IDs
@@ -19,4 +19,9 @@ readonly class Encoding
         public array $tokens,
         public array $typeIds = [],
     ) {}
+
+    public function count(): int
+    {
+        return \count($this->ids);
+    }
 }

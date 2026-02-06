@@ -6,6 +6,15 @@ namespace Codewithkyrian\Tokenizers\Decoders;
 
 class ByteFallbackDecoder extends BaseDecoder
 {
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return 'type' === $key ? 'ByteFallback' : $default;
+        }
+
+        return ['type' => 'ByteFallback'];
+    }
+
     protected function processTokens(array $tokens): array
     {
         $newTokens = [];

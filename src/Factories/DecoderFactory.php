@@ -25,10 +25,10 @@ class DecoderFactory
      * @param array<string, AddedToken> $addedTokens     Optional. Only needed for ByteLevelDecoder.
      * @param null|string               $endOfWordSuffix Optional. Only needed for ByteLevelDecoder.
      */
-    public static function create(array $config, array $addedTokens = [], ?string $endOfWordSuffix = null): ?DecoderInterface
+    public static function create(array $config, array $addedTokens = [], ?string $endOfWordSuffix = null): DecoderInterface
     {
         if (empty($config)) {
-            return null;
+            return new FuseDecoder(' ');
         }
 
         $type = $config['type'] ?? null;

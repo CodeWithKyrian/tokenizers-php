@@ -21,4 +21,20 @@ class NormalizerSequence implements NormalizerInterface
             $text
         );
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            if ('normalizers' === $key) {
+                return array_map(static fn (NormalizerInterface $n) => $n->getConfig(), $this->normalizers);
+            }
+
+            return 'type' === $key ? 'Sequence' : $default;
+        }
+
+        return [
+            'type' => 'Sequence',
+            'normalizers' => array_map(static fn (NormalizerInterface $n) => $n->getConfig(), $this->normalizers),
+        ];
+    }
 }

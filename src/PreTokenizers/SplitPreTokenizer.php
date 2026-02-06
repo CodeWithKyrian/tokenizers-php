@@ -84,4 +84,22 @@ class SplitPreTokenizer implements PreTokenizerInterface
 
         return $result;
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Split',
+                'pattern' => $this->pattern, // Ideally this should be the original pattern string, not compiled regex?
+                'invert' => $this->invert,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Split',
+            'pattern' => $this->pattern,
+            'invert' => $this->invert,
+        ];
+    }
 }

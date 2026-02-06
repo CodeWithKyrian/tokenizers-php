@@ -21,4 +21,20 @@ class PreTokenizerSequence implements PreTokenizerInterface
             \is_array($text) ? $text : [$text]
         );
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            if ('pretokenizers' === $key) {
+                return array_map(static fn (PreTokenizerInterface $pt) => $pt->getConfig(), $this->preTokenizers);
+            }
+
+            return 'type' === $key ? 'Sequence' : $default;
+        }
+
+        return [
+            'type' => 'Sequence',
+            'pretokenizers' => array_map(static fn (PreTokenizerInterface $pt) => $pt->getConfig(), $this->preTokenizers),
+        ];
+    }
 }

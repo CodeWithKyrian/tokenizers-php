@@ -31,12 +31,12 @@ function createMockModel(): ModelInterface
 
         public function encode(array $tokens): array
         {
-            return array_map(fn (string $token) => $this->reverse[$token] ?? 0, $tokens);
+            return array_map(fn(string $token) => $this->reverse[$token] ?? 0, $tokens);
         }
 
         public function decode(array $ids): array
         {
-            return array_map(fn (int $id) => $this->vocab[$id] ?? '<unk>', $ids);
+            return array_map(fn(int $id) => $this->vocab[$id] ?? '<unk>', $ids);
         }
 
         public function getVocab(): array
@@ -55,9 +55,9 @@ function createMockModel(): ModelInterface
             $this->reverse[$id] = $token;
         }
 
-        public function getEndOfWordSuffix(): ?string
+        public function getConfig(?string $key = null, mixed $default = null): mixed
         {
-            return null;
+            return [];
         }
     };
 }
@@ -69,6 +69,11 @@ function createMockNormalizer(): NormalizerInterface
         {
             return strtoupper($text);
         }
+
+        public function getConfig(?string $key = null, mixed $default = null): mixed
+        {
+            return [];
+        }
     };
 }
 
@@ -78,6 +83,11 @@ function createMockPreTokenizer(): PreTokenizerInterface
         public function preTokenize(array|string $text, array $options = []): array
         {
             return is_array($text) ? $text : preg_split('/\s+/', trim($text));
+        }
+
+        public function getConfig(?string $key = null, mixed $default = null): mixed
+        {
+            return [];
         }
     };
 }
@@ -91,6 +101,11 @@ function createMockPostProcessor(): PostProcessorInterface
 
             return [$tokens, $typeIds];
         }
+
+        public function getConfig(?string $key = null, mixed $default = null): mixed
+        {
+            return [];
+        }
     };
 }
 
@@ -100,6 +115,11 @@ function createMockDecoder(): DecoderInterface
         public function decode(array $tokens): string
         {
             return implode(' ', $tokens);
+        }
+
+        public function getConfig(?string $key = null, mixed $default = null): mixed
+        {
+            return [];
         }
     };
 }

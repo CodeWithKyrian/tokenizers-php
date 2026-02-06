@@ -8,6 +8,22 @@ class BPEDecoder extends BaseDecoder
 {
     public function __construct(protected string $suffix = '') {}
 
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'BPEDecoder',
+                'suffix' => $this->suffix,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'BPEDecoder',
+            'suffix' => $this->suffix,
+        ];
+    }
+
     protected function processTokens(array $tokens): array
     {
         $decoded = [];

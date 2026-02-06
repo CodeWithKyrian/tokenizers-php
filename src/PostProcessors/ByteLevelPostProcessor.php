@@ -34,4 +34,24 @@ class ByteLevelPostProcessor implements PostProcessorInterface
 
         return [$tokens, array_fill(0, \count($tokens), 0)];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'ByteLevel',
+                'trim_offsets' => $this->trimOffsets,
+                'use_regex' => $this->useRegex,
+                'add_prefix_space' => $this->addPrefixSpace,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'ByteLevel',
+            'trim_offsets' => $this->trimOffsets,
+            'use_regex' => $this->useRegex,
+            'add_prefix_space' => $this->addPrefixSpace,
+        ];
+    }
 }

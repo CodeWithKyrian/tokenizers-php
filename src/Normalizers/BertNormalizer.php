@@ -57,6 +57,28 @@ class BertNormalizer implements NormalizerInterface
         return implode('', $output);
     }
 
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'BertNormalizer',
+                'clean_text' => $this->cleanText,
+                'handle_chinese_chars' => $this->handleChineseChars,
+                'strip_accents' => $this->stripAccents,
+                'lowercase' => $this->lowercase,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'BertNormalizer',
+            'clean_text' => $this->cleanText,
+            'handle_chinese_chars' => $this->handleChineseChars,
+            'strip_accents' => $this->stripAccents,
+            'lowercase' => $this->lowercase,
+        ];
+    }
+
     protected function doCleanText(string $text): string
     {
         $output = [];

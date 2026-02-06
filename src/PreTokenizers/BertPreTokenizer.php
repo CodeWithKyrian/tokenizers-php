@@ -37,6 +37,15 @@ class BertPreTokenizer implements PreTokenizerInterface
         return $this->bertPreTokenize($text);
     }
 
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null === $key) {
+            return ['type' => 'BertPreTokenizer'];
+        }
+
+        return 'type' === $key ? 'BertPreTokenizer' : $default;
+    }
+
     /**
      * @param string $text the text to pre-tokenize
      *

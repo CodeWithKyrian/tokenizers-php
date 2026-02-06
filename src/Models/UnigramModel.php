@@ -66,6 +66,26 @@ class UnigramModel extends AbstractModel
         $this->fuseUnk = true;
     }
 
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Unigram',
+                'vocab' => $this->getVocabWithScores(),
+                'unk_id' => $this->unkTokenId,
+                'eos_token' => $this->eosToken,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Unigram',
+            'vocab' => $this->getVocabWithScores(),
+            'unk_id' => $this->unkTokenId,
+            'eos_token' => $this->eosToken,
+        ];
+    }
+
     /**
      * @param string[] $tokens the tokens to tokenize
      *
@@ -114,6 +134,21 @@ class UnigramModel extends AbstractModel
             }
             $beginPos += $mblen;
         }
+    }
+
+    /**
+     * Reconstructs the vocabulary array as [ [token, score], ... ].
+     *
+     * @return array<array{0: string, 1: float}>
+     */
+    protected function getVocabWithScores(): array
+    {
+        $vocab = [];
+        foreach ($this->vocab as $i => $token) {
+            $vocab[] = [$token, $this->scores[$i]];
+        }
+
+        return $vocab;
     }
 
     /**

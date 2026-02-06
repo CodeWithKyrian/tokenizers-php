@@ -10,7 +10,7 @@ namespace Codewithkyrian\Tokenizers\DataStructures;
  *   - Whether they should only match single words
  *   - Whether to include any whitespace on its left or right.
  */
-readonly class AddedToken
+class AddedToken implements \JsonSerializable
 {
     public function __construct(
         /**
@@ -57,5 +57,21 @@ readonly class AddedToken
             $data['normalized'] ?? true,
             $data['special'] ?? false,
         );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'content' => $this->content,
+            'single_word' => $this->singleWord,
+            'lstrip' => $this->lStrip,
+            'rstrip' => $this->rStrip,
+            'normalized' => $this->normalized,
+            'special' => $this->special,
+        ];
     }
 }

@@ -33,4 +33,22 @@ class BertPostProcessor implements PostProcessorInterface
 
         return [$processedTokens, $tokenTypeIds];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'BertProcessing',
+                'sep' => [$this->sep, 0], // Best effort reconstruction
+                'cls' => [$this->cls, 0],
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'BertProcessing',
+            'sep' => [$this->sep, 0],
+            'cls' => [$this->cls, 0],
+        ];
+    }
 }

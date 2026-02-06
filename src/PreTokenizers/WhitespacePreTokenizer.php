@@ -21,4 +21,13 @@ class WhitespacePreTokenizer implements PreTokenizerInterface
 
         return preg_split('/\s+/u', $text, -1, \PREG_SPLIT_NO_EMPTY);
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null === $key) {
+            return ['type' => 'Whitespace'];
+        }
+
+        return 'type' === $key ? 'Whitespace' : $default;
+    }
 }

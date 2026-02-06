@@ -35,4 +35,20 @@ class FixedLengthPreTokenizer implements PreTokenizerInterface
 
         return $tokens;
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'FixedLength',
+                'length' => $this->length,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'FixedLength',
+            'length' => $this->length,
+        ];
+    }
 }

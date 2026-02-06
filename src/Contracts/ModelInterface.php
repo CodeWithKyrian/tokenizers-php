@@ -54,10 +54,12 @@ interface ModelInterface
     public function addToken(string $token, int $id): void;
 
     /**
-     * Get the end of word suffix, if any.
-     * Only some models (like BPE) have this property.
+     * Get configuration value(s).
      *
-     * @return null|string the end of word suffix
+     * @param null|string $key     The configuration key (e.g., 'dropout'). If null, returns all config.
+     * @param mixed       $default The default value if the key doesn't exist (ignored when $key is null)
+     *
+     * @return mixed the configuration value, or full config array if $key is null
      */
-    public function getEndOfWordSuffix(): ?string;
+    public function getConfig(?string $key = null, mixed $default = null): mixed;
 }

@@ -27,4 +27,22 @@ class StripNormalizer implements NormalizerInterface
 
         return $text;
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Strip',
+                'strip_left' => $this->stripLeft,
+                'strip_right' => $this->stripRight,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Strip',
+            'strip_left' => $this->stripLeft,
+            'strip_right' => $this->stripRight,
+        ];
+    }
 }

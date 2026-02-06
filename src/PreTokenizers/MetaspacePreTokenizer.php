@@ -43,4 +43,26 @@ class MetaspacePreTokenizer implements PreTokenizerInterface
 
         return [$normalized];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Metaspace',
+                'replacement' => $this->replacement,
+                'add_prefix_space' => $this->addPrefixSpace,
+                'str_rep' => $this->strRep,
+                'prepend_scheme' => $this->prependScheme,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Metaspace',
+            'replacement' => $this->replacement,
+            'add_prefix_space' => $this->addPrefixSpace,
+            'str_rep' => $this->strRep,
+            'prepend_scheme' => $this->prependScheme,
+        ];
+    }
 }

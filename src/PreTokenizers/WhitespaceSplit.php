@@ -21,4 +21,13 @@ class WhitespaceSplit implements PreTokenizerInterface
 
         return preg_split('/[\s\x{FFFD}]+/u', $text, flags: \PREG_SPLIT_NO_EMPTY);
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null === $key) {
+            return ['type' => 'WhitespaceSplit'];
+        }
+
+        return 'type' === $key ? 'WhitespaceSplit' : $default;
+    }
 }

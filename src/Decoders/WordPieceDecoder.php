@@ -13,6 +13,24 @@ class WordPieceDecoder extends BaseDecoder
         protected bool $cleanup = true
     ) {}
 
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'WordPiece',
+                'prefix' => $this->prefix,
+                'cleanup' => $this->cleanup,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'WordPiece',
+            'prefix' => $this->prefix,
+            'cleanup' => $this->cleanup,
+        ];
+    }
+
     protected function processTokens(array $tokens): array
     {
         $decodedTokens = [];

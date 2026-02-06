@@ -49,4 +49,22 @@ class TemplatePostProcessor implements PostProcessorInterface
 
         return [$processedTokens, $typeIds];
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'TemplateProcessing',
+                'single' => $this->single,
+                'pair' => $this->pair,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'TemplateProcessing',
+            'single' => $this->single,
+            'pair' => $this->pair,
+        ];
+    }
 }

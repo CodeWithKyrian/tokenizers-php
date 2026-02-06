@@ -12,6 +12,26 @@ class StripDecoder extends BaseDecoder
         protected int $stop
     ) {}
 
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return match ($key) {
+                'type' => 'Strip',
+                'content' => $this->content,
+                'start' => $this->start,
+                'stop' => $this->stop,
+                default => $default,
+            };
+        }
+
+        return [
+            'type' => 'Strip',
+            'content' => $this->content,
+            'start' => $this->start,
+            'stop' => $this->stop,
+        ];
+    }
+
     protected function processTokens(array $tokens): array
     {
         return array_map(function ($token) {

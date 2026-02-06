@@ -12,4 +12,13 @@ class NFCNormalizer implements NormalizerInterface
     {
         return normalizer_normalize($text, \Normalizer::NFC);
     }
+
+    public function getConfig(?string $key = null, mixed $default = null): mixed
+    {
+        if (null !== $key) {
+            return 'type' === $key ? 'NFC' : $default;
+        }
+
+        return ['type' => 'NFC'];
+    }
 }

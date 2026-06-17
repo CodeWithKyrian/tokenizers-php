@@ -28,7 +28,7 @@ class DigitsPreTokenizer implements PreTokenizerInterface
             return $result;
         }
 
-        preg_match_all($this->pattern, $text, $matches, \PREG_SPLIT_NO_EMPTY);
+        preg_match_all($this->pattern, $text, $matches);
 
         return $matches[0] ?? [];
     }
